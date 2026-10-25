@@ -1,0 +1,6 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "ub-mode",
+  "description": "Disciplined software engineering principles for writing and changing code.",
+  "repository": "https://github.com/unclebob/ub-mode"
+}
