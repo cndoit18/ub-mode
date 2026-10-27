@@ -20,3 +20,35 @@
 Install this repository as an [Agent Plugins v1](https://agent-plugins.org/specification) package using a compatible client. The portable manifest is `plugin.json`, and the skill is at `skills/ub-mode/SKILL.md`.
 
 For manual installation, copy `skills/ub-mode/SKILL.md` into your agent's skills directory as `ub-mode/SKILL.md` (for example `~/.grok/skills/ub-mode/SKILL.md`, `~/.claude/skills/ub-mode/SKILL.md`, or `~/.cursor/skills/ub-mode/SKILL.md`), then invoke `/ub-mode`.
+
+## Unified tool command
+
+The repository provides one entry point for all companion tools. Python 3 and
+Git are required; the first Python tool call downloads their latest upstream
+sources into a shared virtual environment outside the examined project.
+
+From this repository, optionally preinstall them:
+
+```bash
+./bin/ub install
+```
+
+Then run `ub` from the root of the project you want to check. Use the full
+path to this checkout, or link `bin/ub` into a directory already on your
+`PATH`:
+
+```bash
+/path/to/ub-mode/bin/ub crapper --changed
+/path/to/ub-mode/bin/ub dryer src
+/path/to/ub-mode/bin/ub mutator --changed
+/path/to/ub-mode/bin/ub uml
+```
+
+Arguments and the working directory pass through unchanged; `ub <tool> --help`
+shows the tool's own options. Run `ub install` again to update the Python
+tools. `UB_MODE_HOME` overrides their default installation directory,
+`~/.local/share/ub-mode`.
+
+`ub uml` uses uml-viewer's own installer. Its first run creates `./uml`,
+`./get-uml-viewer`, and `.uml-viewer/` in the examined project, then starts
+the viewer. This tool also requires zsh, Clojure CLI, and Java 21 or later.

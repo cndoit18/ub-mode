@@ -87,6 +87,19 @@ Every time you are asked to make a change follow:
 * If they do not need the same mutable thing, give each its own.
 * If they do, allow one writer, and enforce that in the structure.
 
+# Companion tools
+
+Use `bin/ub` from this repository, resolving its absolute path from the
+repository root rather than the examined project. Run it from the project root;
+the first Python tool call installs the tools automatically.
+
+```bash
+/path/to/ub-mode/bin/ub crapper [options]
+/path/to/ub-mode/bin/ub dryer [options]
+/path/to/ub-mode/bin/ub mutator [options]
+/path/to/ub-mode/bin/ub uml
+```
+
 # Then Make it Right
 
 ## Fix Root Causes
