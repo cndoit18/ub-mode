@@ -19,7 +19,11 @@
 
 Install this repository as an [Agent Plugins v1](https://agent-plugins.org/specification) package using a compatible client. The portable manifest is `plugin.json`, and the skill is at `skills/ub-mode/SKILL.md`.
 
-For manual installation, copy `skills/ub-mode/SKILL.md` into your agent's skills directory as `ub-mode/SKILL.md` (for example `~/.grok/skills/ub-mode/SKILL.md`, `~/.claude/skills/ub-mode/SKILL.md`, or `~/.cursor/skills/ub-mode/SKILL.md`), then invoke `/ub-mode`.
+For manual installation, copy the entire `skills/ub-mode/` directory into
+your agent's skills directory as `ub-mode/` (for example
+`~/.grok/skills/ub-mode/`, `~/.claude/skills/ub-mode/`, or
+`~/.cursor/skills/ub-mode/`), then invoke `/ub-mode`. The bundled
+`scripts/` directory is required for the companion tools.
 
 ## Unified tool command
 
@@ -30,18 +34,18 @@ sources into a shared virtual environment outside the examined project.
 From this repository, optionally preinstall them:
 
 ```bash
-./bin/ub install
+./skills/ub-mode/scripts/ub install
 ```
 
-Then run `ub` from the root of the project you want to check. Use the full
-path to this checkout, or link `bin/ub` into a directory already on your
-`PATH`:
+Then run `ub` from the root of the project you want to check. Resolve the
+script from the installed skill directory, or link it into a directory already
+on your `PATH`:
 
 ```bash
-/path/to/ub-mode/bin/ub crapper --changed
-/path/to/ub-mode/bin/ub dryer src
-/path/to/ub-mode/bin/ub mutator --changed
-/path/to/ub-mode/bin/ub uml
+<skill-directory>/scripts/ub crapper --changed
+<skill-directory>/scripts/ub dryer src
+<skill-directory>/scripts/ub mutator --changed
+<skill-directory>/scripts/ub uml
 ```
 
 Arguments and the working directory pass through unchanged; `ub <tool> --help`

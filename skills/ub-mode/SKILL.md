@@ -89,16 +89,21 @@ Every time you are asked to make a change follow:
 
 # Companion tools
 
-Use `bin/ub` from this repository, resolving its absolute path from the
-repository root rather than the examined project. Run it from the project root;
-the first Python tool call installs the tools automatically.
+The scripts are bundled with this skill. Resolve `scripts/ub` relative to
+the directory containing this `SKILL.md`, not relative to the examined
+project. Run it from the project root; the first Python tool call installs the
+tools automatically.
 
 ```bash
-/path/to/ub-mode/bin/ub crapper [options]
-/path/to/ub-mode/bin/ub dryer [options]
-/path/to/ub-mode/bin/ub mutator [options]
-/path/to/ub-mode/bin/ub uml
+<skill-directory>/scripts/ub crapper [options]
+<skill-directory>/scripts/ub dryer [options]
+<skill-directory>/scripts/ub mutator [options]
+<skill-directory>/scripts/ub uml
 ```
+
+For a full plugin installation, the skill directory is
+`skills/ub-mode` beneath the plugin root. A manual installation must copy the
+entire skill directory, including `scripts/`, not just `SKILL.md`.
 
 # Then Make it Right
 

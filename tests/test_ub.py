@@ -3,6 +3,7 @@ import importlib.util
 import io
 import os
 from pathlib import Path
+import shutil
 import stat
 import subprocess
 import sys
@@ -11,8 +12,10 @@ import unittest
 from unittest.mock import patch
 
 ROOT = Path(__file__).absolute().parents[1]
-UB = ROOT / "bin" / "ub"
-SPEC = importlib.util.spec_from_file_location("ub", ROOT / "bin" / "ub.py")
+UB = ROOT / "skills" / "ub-mode" / "scripts" / "ub"
+SPEC = importlib.util.spec_from_file_location(
+    "ub", ROOT / "skills" / "ub-mode" / "scripts" / "ub.py"
+)
 ub = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(ub)
 NETWORK = os.environ.get("UB_NETWORK_TESTS") == "1"
@@ -144,6 +147,22 @@ class UnifiedCommandTest(unittest.TestCase):
             finally:
                 os.chdir(previous)
 
+    def test_standalone_skill_runs_outside_the_repository(self):
+        with tempfile.TemporaryDirectory() as directory:
+            installed = Path(directory) / "installed" / "ub-mode"
+            shutil.copytree(UB.parent.parent, installed)
+            project = Path(directory) / "project"
+            project.mkdir()
+            result = subprocess.run(
+                [sys.executable, str(installed / "scripts" / "ub"), "--help"],
+                cwd=project,
+                text=True,
+                capture_output=True,
+                check=False,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertIn("usage: ub", result.stdout)
+
     def test_help_lists_the_tools_without_installing_them(self):
         with tempfile.TemporaryDirectory() as directory:
             home = Path(directory)
@@ -153,7 +172,7 @@ class UnifiedCommandTest(unittest.TestCase):
                 self.assertIn(tool, result.stdout)
             self.assertFalse((home / "venv").exists())
             direct = subprocess.run(
-                [sys.executable, str(ROOT / "bin" / "ub.py"), "--help"],
+                [sys.executable, str(UB.with_suffix(".py")), "--help"],
                 text=True,
                 capture_output=True,
                 check=False,
